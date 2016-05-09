@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Library", "Library\Library.fsproj", "{213C779B-ABF5-49E3-8D2B-A1E6B7482390}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TextApp", "TextApp\TextApp.fsproj", "{E55856AC-C743-4183-9B26-D05045CB5A74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppAndroidCSharp", "AppAndroidCSharp\AppAndroidCSharp.csproj", "{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,18 +23,18 @@ Global
 		{213C779B-ABF5-49E3-8D2B-A1E6B7482390}.Release|Any CPU.Build.0 = Release|Any CPU
 		{213C779B-ABF5-49E3-8D2B-A1E6B7482390}.Release|x86.ActiveCfg = Release|x86
 		{213C779B-ABF5-49E3-8D2B-A1E6B7482390}.Release|x86.Build.0 = Release|x86
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|x86.Build.0 = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Debug|x86.Deploy.0 = Debug|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|x86.ActiveCfg = Release|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|x86.Build.0 = Release|Any CPU
-		{E55856AC-C743-4183-9B26-D05045CB5A74}.Release|x86.Deploy.0 = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|x86.Build.0 = Release|Any CPU
+		{CDFFA058-1ACF-4488-ACC2-FAF1FAC4AA2B}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

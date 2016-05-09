@@ -22,3 +22,7 @@ module ButtonTest =
         new ContentPage()
     page.Title <- "Some title"
     page.Content <- stackLayout
+
+
+    type App() =
+        inherit Application(MainPage = page)
