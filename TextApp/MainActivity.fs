@@ -1,4 +1,4 @@
-﻿namespace TestXamarin
+﻿namespace TextApp
 
 open System
 
@@ -9,7 +9,7 @@ open Android.Runtime
 open Android.Views
 open Android.Widget
 
-[<Activity (Label = "TestXamarin", MainLauncher = true)>]
+[<Activity (Label = "TextApp", MainLauncher = true)>]
 type MainActivity () =
     inherit Activity ()
 

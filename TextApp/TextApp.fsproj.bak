@@ -5,21 +5,21 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{F2A71F9B-5D33-465A-A702-920D77279786}</ProjectTypeGuids>
-    <ProjectGuid>a65a3ee9-339d-4bb1-a649-6e1f41723e47</ProjectGuid>
+    <ProjectGuid>e55856ac-c743-4183-9b26-d05045cb5a74</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>TestXamarin</RootNamespace>
+    <RootNamespace>TextApp</RootNamespace>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.fs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <AssemblyName>TestXamarin</AssemblyName>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v5.1</TargetFrameworkVersion>
+    <AssemblyName>TextApp</AssemblyName>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
     <TargetFrameworkProfile />
-    <Name>TestXamarin</Name>
+    <Name>TextApp</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +58,9 @@
     <None Include="Properties\AndroidManifest.xml" />
     <Compile Include="MainActivity.fs" />
     <None Include="GettingStarted.Xamarin" />
+    <None Include="doc.md">
+      <SubType>AndroidResource</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -68,5 +71,12 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.fsproj">
+      <Name>Library</Name>
+      <Project>{213c779b-abf5-49e3-8d2b-a1e6b7482390}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>
