@@ -9,6 +9,12 @@ using Android.Content.PM;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
+/*
+ *  Wondering why a csproj vs a fsproj?
+ *  I added a csproj because at the moment the fsproj template is messed up.
+ *  It does not allow me to change the target version of Android which messes up the deployment to the VM.
+ *  Also it keeps showing errors on the auto-generated Resource.Designer saying 'end' is a reserved keyword.
+ */
 namespace AppAndroidCSharp
 {
     [Activity(Theme = "@android:style/Theme.Material.Light.DarkActionBar", 
