@@ -71,8 +71,7 @@
   </Target>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <None Include="Script.fsx" />
-    <Compile Include="Button.fs" />
+    <Compile Include="LibTest.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

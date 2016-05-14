@@ -17,7 +17,7 @@ using Xamarin.Forms.Platform.Android;
  */
 namespace AppAndroidCSharp
 {
-    [Activity(Theme = "@android:style/Theme.Material.Light.DarkActionBar", 
+    [Activity(Theme = "@android:style/Theme.Material.Light", 
               Label = "AppAndroidCSharp", 
               Icon = "@drawable/icon", 
               MainLauncher = true, 
@@ -28,7 +28,7 @@ namespace AppAndroidCSharp
         {
             base.OnCreate(bundle);
             Forms.Init(this, bundle);
-            LoadApplication(new Library.ButtonTest.App());
+            LoadApplication(new Library.LibTest.App());
         }
     }
 }
