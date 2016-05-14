@@ -50,6 +50,7 @@ let page title =
 (** 
     Table view sample
 **)
+
 let tablePage() =
     let tableRoot = new TableRoot("Table root")
     tableRoot.Add [
@@ -84,7 +85,7 @@ let listPage() =
             l.SetBinding(Label.TextProperty, name)
             l
     
-        let layout = new StackLayout(Padding = new Thickness(0., 5.),
+        let layout = new StackLayout(Padding = new Thickness(5.),
                                      Orientation = StackOrientation.Horizontal)
         [ label "Amount"; label "Title" ] |> List.iter layout.Children.Add
         new ViewCell(View = layout)
@@ -98,6 +99,29 @@ let listPage() =
         Title = "List page", 
         Content = listview)
 
+(** 
+    Navigation page
+    05-15 00:24:33.391  3201  3201 I MonoDroid: UNHANDLED EXCEPTION:
+    05-15 00:24:33.396  3201  3201 I MonoDroid: System.InvalidOperationException: NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.
+**)
+
+let navigationPage() =
+    let page = new NavigationPage(Title = "Navigation page")
+    let navpage1 = new ContentPage(Title =  "Nav page 1")
+    let navpage2 = new ContentPage(Title =  "Nav page 2")
+    let navpage3 = new ContentPage(Title =  "Nav page 3", Content = new Label (Text = "Some label 3"))
+    
+    let btn1 = new Button(Text = "Go 2")
+    btn1.Clicked.AddHandler(fun _ _ -> page.PushAsync navpage2 |> ignore)
+    navpage1.Content <- btn1
+
+    let btn2 = new Button(Text = "Go 3")
+    btn2.Clicked.AddHandler(fun _ _ -> page.PushAsync navpage3 |> ignore)
+    navpage2.Content <- btn2
+
+    page.PushAsync navpage1 |> ignore
+    page
+    
 
 (** 
     Tabbed page
@@ -105,9 +129,8 @@ let listPage() =
 
 let tabbedPage() = 
     let page = new TabbedPage(Title = "Tabbed page")
-    [ tablePage(); listPage() ] |> List.iter page.Children.Add
+    [ tablePage() :> Page; listPage() :> Page; navigationPage() :> Page ] |> List.iter page.Children.Add
     page
-
 
 
 
