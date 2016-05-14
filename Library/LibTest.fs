@@ -78,12 +78,12 @@ let listPage() =
           { Amount = 2.5m; Title = "Bread" }
           { Amount = 3.m; Title = "Butter" } ]    
 
-    let label (name: string) = 
-        let l = new Label()
-        l.SetBinding(Label.TextProperty, name)
-        l
+    let viewCell() =
+        let label (name: string) = 
+            let l = new Label()
+            l.SetBinding(Label.TextProperty, name)
+            l
     
-    let viewCell =
         let layout = new StackLayout(Padding = new Thickness(0., 5.),
                                      Orientation = StackOrientation.Horizontal)
         [ label "Amount"; label "Title" ] |> List.iter layout.Children.Add
@@ -92,7 +92,7 @@ let listPage() =
     let listview = 
         new ListView(
             ItemsSource = expenses,
-            ItemTemplate = new DataTemplate(fun () -> box viewCell))
+            ItemTemplate = new DataTemplate(fun () -> viewCell() |> box))
 
     new ContentPage(
         Title = "List page", 
