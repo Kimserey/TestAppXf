@@ -41,26 +41,99 @@ let stackLayout() =
 
     layout.Children.Add(entryRow entry price)
     layout.Children.Add(button handler)
-    layout.Children.Add(mainGrid)
+    layout.Children.Add(new ScrollView (Content = mainGrid))
     layout
 
 let page title = 
     new ContentPage(Title = title, Content = stackLayout())
 
-let tabbedPage = 
-    new TabbedPage(Title = "Tabbed page")
-tabbedPage.Children.Add(page "Page 1")
-tabbedPage.Children.Add(page "Page 2")
-tabbedPage.Children.Add(page "Page 3")
-tabbedPage.Children.Add(page "Page 4")
+(** 
+    Table view sample
+**)
+let tablePage() =
+    let tableRoot = new TableRoot("Table root")
+    tableRoot.Add [
+        let x = new TableSection("Section")
+        x.Add(new TextCell(Text = "TextCell text", Detail = "TextCell detail"))
+        x.Add(new EntryCell(Label = "EntryCell", Placeholder = "entry text", Keyboard = Keyboard.Default))
+        yield x
+        let y = new TableSection("Section")
+        y.Add(new SwitchCell(Text = "Switch"))
+        y.Add(new EntryCell(Label = "Phone", Placeholder = "entry phone", Keyboard = Keyboard.Telephone))
+        yield y
+    ]
+    new ContentPage(
+        Title = "Table page", 
+        Content = new TableView(Intent = TableIntent.Form, Root = tableRoot))
 
-//UNHANDLED EXCEPTION:
-//05-14 11:40:33.556  2306  2306 I MonoDroid: System.InvalidOperationException: Master and Detail must be set before adding MasterDetailPage to a container
-let masterDetailPage =
+(**
+    List view sample
+**)
+
+type Expense = { Amount: decimal; Title: string }
+
+let listPage() =
+    let expenses =
+        [ { Amount = 10.5m; Title = "Meat" }
+          { Amount = 2.5m; Title = "Bread" }
+          { Amount = 3.m; Title = "Butter" } ]    
+
+    let label (name: string) = 
+        let l = new Label()
+        l.SetBinding(Label.TextProperty, name)
+        l
+    
+    let viewCell =
+        let layout = new StackLayout(Padding = new Thickness(0., 5.),
+                                     Orientation = StackOrientation.Horizontal)
+        [ label "Amount"; label "Title" ] |> List.iter layout.Children.Add
+        new ViewCell(View = layout)
+
+    let listview = 
+        new ListView(
+            ItemsSource = expenses,
+            ItemTemplate = new DataTemplate(fun () -> box viewCell))
+
+    new ContentPage(
+        Title = "List page", 
+        Content = listview)
+
+
+(** 
+    Tabbed page
+**)
+
+let tabbedPage() = 
+    let page = new TabbedPage(Title = "Tabbed page")
+    [ tablePage(); listPage() ] |> List.iter page.Children.Add
+    page
+
+
+
+
+let menu() =
+    new ListView(ItemsSource = [ "Page 1"; "Page 2" ])
+
+let masterDetailPage() =
+    let menu = menu()
+
+    let master =
+        let layout = new StackLayout()
+        layout.Children.Add(Label(Text = "Master content"))
+        layout.Children.Add(menu)
+        ContentPage(Title = "Master title", Content = layout)
+
+    let detail =
+        new NavigationPage(page "super page")
+    
+    menu.ItemSelected.AddHandler(fun sender args -> 
+        detail.BindingContext <- args.SelectedItem
+        ())
+
     new MasterDetailPage(
         Title = "Master detail page", 
-        Master = ContentPage(Title = "Master", Content = Label(Text = "Master content")),
-        Detail = ContentPage(Title = "detail", Content = Label(Text = "Detail content")))
+        Master = master,
+        Detail = detail)
 
 type App() =
-    inherit Application(MainPage = masterDetailPage)
+    inherit Application(MainPage = tabbedPage())

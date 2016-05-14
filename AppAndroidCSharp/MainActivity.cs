@@ -18,7 +18,7 @@ using Xamarin.Forms.Platform.Android;
 namespace AppAndroidCSharp
 {
     [Activity(Theme = "@android:style/Theme.Material.Light", 
-              Label = "AppAndroidCSharp", 
+              Label = "Test app", 
               Icon = "@drawable/icon", 
               MainLauncher = true, 
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
