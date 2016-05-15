@@ -48,10 +48,10 @@ let page title =
     new ContentPage(Title = title, Content = stackLayout())
 
 (** 
-    Table view sample
+    Content page - Table View
 **)
 
-let tablePage() =
+let contentPage() =
     let tableRoot = new TableRoot("Table root")
     tableRoot.Add [
         let x = new TableSection("Section")
@@ -68,7 +68,7 @@ let tablePage() =
         Content = new TableView(Intent = TableIntent.Form, Root = tableRoot))
 
 (**
-    List view sample
+    Content page - List view
 **)
 
 type Expense = { Amount: decimal; Title: string }
@@ -107,6 +107,8 @@ let listPage() =
 
 let navigationPage() =
     let page = new NavigationPage(Title = "Navigation page")
+    page.Icon <- FileImageSource.FromFile("hamburger") :?> FileImageSource
+
     let navpage1 = new ContentPage(Title =  "Nav page 1")
     let navpage2 = new ContentPage(Title =  "Nav page 2")
     let navpage3 = new ContentPage(Title =  "Nav page 3", Content = new Label (Text = "Some label 3"))
@@ -127,29 +129,62 @@ let navigationPage() =
     Master detail page
 **)
 
-let menu() =
-    new ListView(ItemsSource = [ "Page 1"; "Page 2" ])
-
 let masterDetailPage() =
-    let menu = menu()
-
+    let menu =
+        new ListView(ItemsSource = [ "Page 1"; "Page 2" ])
+    
     let master =
         let layout = new StackLayout()
         layout.Children.Add(Label(Text = "Master content"))
         layout.Children.Add(menu)
         ContentPage(Title = "Master title", Content = layout)
 
-    let detail =
-        new NavigationPage(page "super page")
+    let label = new Label(Text = "Nothing selected")
     
-    menu.ItemSelected.AddHandler(fun sender args -> 
+    let detail =
+        let d = new NavigationPage(new ContentPage(Content = label))
+        NavigationPage.SetTitleIcon(d, FileImageSource.FromFile("hamburger.png") :?> FileImageSource)
+        d
+
+    detail.BindingContextChanged.AddHandler(fun _ _ ->
+        label.Text <- string detail.BindingContext)
+
+    let materDetailPage =
+        new MasterDetailPage(
+            Title = "Master detail page",
+            Master = master,
+            Detail = detail)
+
+    menu.ItemSelected.AddHandler(fun _ args -> 
         detail.BindingContext <- args.SelectedItem
+        materDetailPage.IsPresented <- false
         ())
 
-    new MasterDetailPage(
-        Title = "Master detail page", 
-        Master = master,
-        Detail = detail)
+    materDetailPage
+
+(** 
+    Carousel page
+**)
+
+let carouselPage() =
+    let expenses =
+        [ { Amount = 10.5m; Title = "Meat" }
+          { Amount = 2.5m; Title = "Bread" }
+          { Amount = 3.m; Title = "Butter" } ]
+
+    let template() =
+        let label (name: string) = 
+            let l = new Label(HorizontalTextAlignment = TextAlignment.Center)
+            l.SetBinding(Label.TextProperty, name)
+            l
+        let layout = new StackLayout(Padding = new Thickness(5.))
+        [ label "Amount"; label "Title" ] |> List.iter layout.Children.Add
+        new ContentPage(Content = layout)
+
+    new CarouselPage(
+        Title = "Carousel page", 
+        ItemsSource = expenses, 
+        ItemTemplate = new DataTemplate(fun () -> template() |> box))
 
 (** 
     Tabbed page
@@ -157,10 +192,11 @@ let masterDetailPage() =
 
 let tabbedPage() = 
     let page = new TabbedPage(Title = "Tabbed page")
-    [ tablePage() :> Page
+    [ ContentPage() :> Page
       listPage() :> Page
       navigationPage() :> Page
-      masterDetailPage() :> Page] 
+      masterDetailPage() :> Page
+      carouselPage() :> Page ] 
     |> List.iter page.Children.Add
     page
 
