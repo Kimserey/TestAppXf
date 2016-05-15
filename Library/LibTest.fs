@@ -77,7 +77,7 @@ let listPage() =
     let expenses =
         [ { Amount = 10.5m; Title = "Meat" }
           { Amount = 2.5m; Title = "Bread" }
-          { Amount = 3.m; Title = "Butter" } ]    
+          { Amount = 3.m; Title = "Butter" } ]
 
     let viewCell() =
         let label (name: string) = 
@@ -92,7 +92,7 @@ let listPage() =
 
     let listview = 
         new ListView(
-            ItemsSource = expenses,
+            ItemsSource = (List.replicate 100 expenses |> List.concat),
             ItemTemplate = new DataTemplate(fun () -> viewCell() |> box))
 
     new ContentPage(
@@ -124,15 +124,8 @@ let navigationPage() =
     
 
 (** 
-    Tabbed page
+    Master detail page
 **)
-
-let tabbedPage() = 
-    let page = new TabbedPage(Title = "Tabbed page")
-    [ tablePage() :> Page; listPage() :> Page; navigationPage() :> Page ] |> List.iter page.Children.Add
-    page
-
-
 
 let menu() =
     new ListView(ItemsSource = [ "Page 1"; "Page 2" ])
@@ -157,6 +150,20 @@ let masterDetailPage() =
         Title = "Master detail page", 
         Master = master,
         Detail = detail)
+
+(** 
+    Tabbed page
+**)
+
+let tabbedPage() = 
+    let page = new TabbedPage(Title = "Tabbed page")
+    [ tablePage() :> Page
+      listPage() :> Page
+      navigationPage() :> Page
+      masterDetailPage() :> Page] 
+    |> List.iter page.Children.Add
+    page
+
 
 type App() =
     inherit Application(MainPage = tabbedPage())
