@@ -186,55 +186,36 @@ let carouselPage() =
         ItemTemplate = new DataTemplate(fun () -> template() |> box))
 
 (**
-    List view with DataTemplateSelector    
-    
-    When scrolling ->
-
-    05-16 10:26:25.417  1843  1843 I MonoDroid: UNHANDLED EXCEPTION:
-    05-16 10:26:25.436  1843  1843 I MonoDroid: Java.Lang.ArrayIndexOutOfBoundsException: length=20; index=20
-    05-16 10:26:25.436  1843  1843 I MonoDroid:   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw () <0x9d1bfc70 + 0x0002b> in <filename unknown>:0 
-    05-16 10:26:25.436  1843  1843 I MonoDroid:   at Android.Runtime.JNIEnv.CallNonvirtualBooleanMethod (IntPtr jobject, IntPtr jclass, IntPtr jmethod, Android.Runtime.JValue* parms) <0x9c5ceed8 + 0x000b7> in <filename unknown>:0 
-    05-16 10:26:25.436  1843  1843 I MonoDroid:   at Android.Views.View.DispatchTouchEvent (Android.Views.MotionEvent e) <0x9d1bc348 + 0x0014f> in <filename unknown>:0 
-    05-16 10:26:25.436  1843  1843 I MonoDroid:   at Xamarin.Forms.Platform.Android.PlatformRenderer.DispatchTouchEvent (Android.Views.MotionEvent e) <0x9d1bb7b8 + 0x00133> in <filename unknown>:0 
-    05-16 10:26:25.437  1843  1843 I MonoDroid:   at Android.Views.View.n_DispatchTouchEvent_Landroid_view_MotionEvent_ (IntPtr jnienv, IntPtr native__this, IntPtr native_e) <0x9d1bb6f8 + 0x00057> in <filename unknown>:0 
-    05-16 10:26:25.437  1843  1843 I MonoDroid:   at (wrapper dynamic-method) System.Object:b6d4097d-ef8d-4b11-aa28-a7d5d0020a20 (intptr,intptr,intptr)
-    05-16 10:26:25.437  1843  1843 I MonoDroid:   --- End of managed exception stack trace ---
+    Expense table
 **)
-
-type ExpenseDataTemplate() =
-    inherit DataTemplateSelector()
-    
+let listViewWithDataTemplateSelector() =    
     let label (name: string) = 
         let l = new Label()
         l.SetBinding(Label.TextProperty, name)
         l
 
-    let viewCell1() =
+    let viewCell1 =
         let layout = new StackLayout(Padding = new Thickness(5.),
                                      Orientation = StackOrientation.Horizontal)
         [ new Label(Text = "Type 1"); label "Amount"; label "Title" ] |> List.iter layout.Children.Add
         new ViewCell(View = layout)
 
-    let viewCell2() =
+    let viewCell2 =
         let layout = new StackLayout(Padding = new Thickness(5.),
                                      Orientation = StackOrientation.Horizontal)
         [ new Label(Text = "Type 2"); label "Title"; label "Amount"; ] |> List.iter layout.Children.Add
         new ViewCell(View = layout)
     
-    override x.OnSelectTemplate(item, container) =
-        let exp = unbox<Expense> item
-        if exp.Amount < 5.m then new DataTemplate(fun () -> box <| viewCell1())
-        else new DataTemplate(fun () -> box <| viewCell2())
-
-let listViewWithDataTemplateSelector() =
     let expenses =
         [ { Amount = 10.5m; Title = "Meat" }
           { Amount = 2.5m; Title = "Bread" }
           { Amount = 3.m; Title = "Butter" } ] |> List.replicate 10 |> List.concat
 
-    let templateSelector = new ExpenseDataTemplate()
-    let list = new ListView(ItemsSource = expenses, ItemTemplate = templateSelector)
-    new ContentPage(Title = "List view with datatemplate selector", Content = list)
+    let layout = new StackLayout(Orientation = StackOrientation.Horizontal , VerticalOptions = LayoutOptions.EndAndExpand)
+    [ new Entry(Placeholder = "Expense", Keyboard = Keyboard.Default, HorizontalOptions = LayoutOptions.Fill)
+      new Entry(Placeholder = "Price", Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.Fill) ]
+    |> List.iter layout.Children.Add
+    new ContentPage(Title = "List view with datatemplate selector", Content = layout)
 
 (** 
     Tabbed page
