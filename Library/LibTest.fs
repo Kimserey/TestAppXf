@@ -101,7 +101,6 @@ let listPage() =
 
 (** 
     Navigation page
-    05-15 00:24:33.391  3201  3201 I MonoDroid: UNHANDLED EXCEPTION:
     05-15 00:24:33.396  3201  3201 I MonoDroid: System.InvalidOperationException: NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.
 **)
 
