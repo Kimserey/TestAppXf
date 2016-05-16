@@ -211,9 +211,29 @@ let listViewWithDataTemplateSelector() =
           { Amount = 2.5m; Title = "Bread" }
           { Amount = 3.m; Title = "Butter" } ] |> List.replicate 10 |> List.concat
 
-    let layout = new StackLayout(Orientation = StackOrientation.Horizontal , VerticalOptions = LayoutOptions.EndAndExpand)
-    [ new Entry(Placeholder = "Expense", Keyboard = Keyboard.Default, HorizontalOptions = LayoutOptions.Fill)
-      new Entry(Placeholder = "Price", Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.Fill) ]
+    let grid = new Grid(VerticalOptions = LayoutOptions.EndAndExpand)
+    grid.RowDefinitions.Add(new RowDefinition())
+    grid.ColumnDefinitions.Add(new ColumnDefinition(Width = GridLength(3., GridUnitType.Star)))
+    grid.ColumnDefinitions.Add(new ColumnDefinition(Width = GridLength(1., GridUnitType.Star)))
+    grid.Children.Add(new Entry(Placeholder = "Something"), 0, 0)
+    grid.Children.Add(new Entry(Placeholder = "Price", Keyboard = Keyboard.Numeric), 1, 0)
+    
+    let tableRoot = new TableRoot("Table root")
+    tableRoot.Add [
+        let x = new TableSection("Monday 26")
+        x.Add(new TextCell(Text = "TextCell text", Detail = "TextCell detail"))
+        x.Add(new EntryCell(Label = "EntryCell", Placeholder = "entry text", Keyboard = Keyboard.Default))
+        yield x
+        let y = new TableSection("Tuesday 27")
+        y.Add(new SwitchCell(Text = "Switch"))
+        y.Add(new EntryCell(Label = "Phone", Placeholder = "entry phone", Keyboard = Keyboard.Telephone))
+        yield y
+    ]
+    let table = new TableView(Root = tableRoot, Intent = TableIntent.Data)
+
+    let layout = new StackLayout()
+    [ table :> View
+      grid :> View ]
     |> List.iter layout.Children.Add
     new ContentPage(Title = "List view with datatemplate selector", Content = layout)
 
@@ -223,12 +243,12 @@ let listViewWithDataTemplateSelector() =
 
 let tabbedPage() = 
     let page = new TabbedPage(Title = "Tabbed page")
-    [ contentPage() :> Page
+    [ listViewWithDataTemplateSelector() :> Page 
+      contentPage() :> Page
       listPage() :> Page
       navigationPage() :> Page
       masterDetailPage() :> Page
-      carouselPage() :> Page
-      listViewWithDataTemplateSelector() :> Page ] 
+      carouselPage() :> Page] 
     |> List.iter page.Children.Add
     page
 
