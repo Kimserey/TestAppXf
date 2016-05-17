@@ -189,53 +189,40 @@ let carouselPage() =
     Expense table
 **)
 let listViewWithDataTemplateSelector() =    
-    let label (name: string) = 
-        let l = new Label()
-        l.SetBinding(Label.TextProperty, name)
-        l
-
-    let viewCell1 =
-        let layout = new StackLayout(Padding = new Thickness(5.),
-                                     Orientation = StackOrientation.Horizontal)
-        [ new Label(Text = "Type 1"); label "Amount"; label "Title" ] |> List.iter layout.Children.Add
-        new ViewCell(View = layout)
-
-    let viewCell2 =
-        let layout = new StackLayout(Padding = new Thickness(5.),
-                                     Orientation = StackOrientation.Horizontal)
-        [ new Label(Text = "Type 2"); label "Title"; label "Amount"; ] |> List.iter layout.Children.Add
-        new ViewCell(View = layout)
     
-    let expenses =
-        [ { Amount = 10.5m; Title = "Meat" }
-          { Amount = 2.5m; Title = "Bread" }
-          { Amount = 3.m; Title = "Butter" } ] |> List.replicate 10 |> List.concat
-
+    let toolbarItem = new ToolbarItem("+", "plus", fun () -> ())
+    
+    let list = new StackLayout()
     let grid = new Grid(VerticalOptions = LayoutOptions.EndAndExpand)
     grid.RowDefinitions.Add(new RowDefinition())
+    grid.ColumnDefinitions.Add(new ColumnDefinition(Width = GridLength(5., GridUnitType.Star)))
     grid.ColumnDefinitions.Add(new ColumnDefinition(Width = GridLength(3., GridUnitType.Star)))
     grid.ColumnDefinitions.Add(new ColumnDefinition(Width = GridLength(1., GridUnitType.Star)))
-    grid.Children.Add(new Entry(Placeholder = "Something"), 0, 0)
-    grid.Children.Add(new Entry(Placeholder = "Price", Keyboard = Keyboard.Numeric), 1, 0)
-    
-    let tableRoot = new TableRoot("Table root")
-    tableRoot.Add [
-        let x = new TableSection("Monday 26")
-        x.Add(new TextCell(Text = "TextCell text", Detail = "TextCell detail"))
-        x.Add(new EntryCell(Label = "EntryCell", Placeholder = "entry text", Keyboard = Keyboard.Default))
-        yield x
-        let y = new TableSection("Tuesday 27")
-        y.Add(new SwitchCell(Text = "Switch"))
-        y.Add(new EntryCell(Label = "Phone", Placeholder = "entry phone", Keyboard = Keyboard.Telephone))
-        yield y
-    ]
-    let table = new TableView(Root = tableRoot, Intent = TableIntent.Data)
+    let description = new Entry(Placeholder = "Description")
+    let txt = new Entry(Placeholder = "Price", Keyboard = Keyboard.Numeric)
+    let btn = new Button(Text = "+")
+    btn.Clicked.AddHandler(fun _ _ -> list.Children.Add (new Label(Text = sprintf "%s %s" description.Text txt.Text)))
+    grid.Children.Add(description, 0, 0)
+    grid.Children.Add(txt, 1, 0)
+    grid.Children.Add(btn, 2, 0)
 
     let layout = new StackLayout()
-    [ table :> View
+    [ new ScrollView(Content = list) :> View
       grid :> View ]
     |> List.iter layout.Children.Add
-    new ContentPage(Title = "List view with datatemplate selector", Content = layout)
+    let contentPage = new ContentPage(Title = "List view with datatemplate selector", Content = layout)
+    contentPage.ToolbarItems.Add(toolbarItem)
+    new NavigationPage(contentPage)
+
+(** 
+    Viewmodel
+**)
+
+//type BaseViewModel() =
+//    let propertyChanged = new Event<System.ComponentModel.PropertyChangedEventHandler, _>()
+//
+//    interface System.ComponentModel.INotifyPropertyChanged with
+//        member x.PropertyChanged = propertyChanged.Publish
 
 (** 
     Tabbed page
@@ -253,4 +240,4 @@ let tabbedPage() =
     page
 
 type App() =
-    inherit Application(MainPage = tabbedPage())
+    inherit Application(MainPage = listViewWithDataTemplateSelector())
