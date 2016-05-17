@@ -218,11 +218,20 @@ let listViewWithDataTemplateSelector() =
     Viewmodel
 **)
 
-//type BaseViewModel() =
-//    let propertyChanged = new Event<System.ComponentModel.PropertyChangedEventHandler, _>()
-//
-//    interface System.ComponentModel.INotifyPropertyChanged with
-//        member x.PropertyChanged = propertyChanged.Publish
+open System.ComponentModel
+
+type BaseViewModel() =
+    let propertyChanged = new Event<_, _>()
+
+    interface INotifyPropertyChanged with
+        [<CLIEvent>]
+        member x.PropertyChanged = propertyChanged.Publish
+    
+    [<CLIEvent>]
+    member x.PropertyChanged = propertyChanged.Publish
+
+    member x.OnPropertyChanged name =
+        propertyChanged.Trigger(x, new PropertyChangedEventArgs(name))
 
 (** 
     Tabbed page
